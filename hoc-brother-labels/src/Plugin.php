@@ -8,12 +8,14 @@
 namespace HOC\BrotherLabels;
 
 use HOC\BrotherLabels\Admin\BulkActions;
+use HOC\BrotherLabels\Admin\ExportActions;
 use HOC\BrotherLabels\Admin\Notices;
 use HOC\BrotherLabels\Admin\OrderActions;
 use HOC\BrotherLabels\Admin\OrderMetaBox;
 use HOC\BrotherLabels\Admin\SettingsPage;
 use HOC\BrotherLabels\API\PrintJobController;
 use HOC\BrotherLabels\Labels\BestBeforeCalculator;
+use HOC\BrotherLabels\Labels\CsvExporter;
 use HOC\BrotherLabels\Labels\FieldMapper;
 use HOC\BrotherLabels\Labels\LabelBuilder;
 use HOC\BrotherLabels\PrintService\Client;
@@ -44,6 +46,13 @@ class Plugin {
 	private $print_job_controller;
 
 	/**
+	 * CSV exporter, built once and reused.
+	 *
+	 * @var CsvExporter
+	 */
+	private $csv_exporter;
+
+	/**
 	 * Returns the singleton instance.
 	 *
 	 * @return Plugin
@@ -67,7 +76,10 @@ class Plugin {
 	 * @return void
 	 */
 	public function boot() {
-		$this->print_job_controller = $this->build_print_job_controller();
+		$field_mapper = $this->build_field_mapper();
+
+		$this->print_job_controller = $this->build_print_job_controller( $field_mapper );
+		$this->csv_exporter         = $this->build_csv_exporter( $field_mapper );
 
 		$this->register_admin_components();
 		$this->register_auto_print_hook();
@@ -75,20 +87,43 @@ class Plugin {
 	}
 
 	/**
+	 * Builds the field mapper and its dependency graph, shared by both the
+	 * print pipeline and the CSV export pipeline.
+	 *
+	 * @return FieldMapper
+	 */
+	private function build_field_mapper() {
+		$product_resolver  = new ProductResolver();
+		$item_meta_resolver = new ItemMetaResolver( $product_resolver );
+		$best_before_calc   = new BestBeforeCalculator();
+
+		return new FieldMapper( $item_meta_resolver, $best_before_calc );
+	}
+
+	/**
 	 * Builds the print job controller and its full dependency graph.
 	 *
+	 * @param FieldMapper $field_mapper Shared field mapper.
 	 * @return PrintJobController
 	 */
-	private function build_print_job_controller() {
-		$product_resolver   = new ProductResolver();
-		$item_meta_resolver  = new ItemMetaResolver( $product_resolver );
-		$best_before_calc    = new BestBeforeCalculator();
-		$field_mapper         = new FieldMapper( $item_meta_resolver, $best_before_calc );
-		$label_builder         = new LabelBuilder( $field_mapper );
-		$order_extractor       = new OrderExtractor();
-		$client                = new Client();
+	private function build_print_job_controller( FieldMapper $field_mapper ) {
+		$label_builder   = new LabelBuilder( $field_mapper );
+		$order_extractor = new OrderExtractor();
+		$client          = new Client();
 
 		return new PrintJobController( $order_extractor, $label_builder, $client );
+	}
+
+	/**
+	 * Builds the CSV exporter and its dependency graph.
+	 *
+	 * @param FieldMapper $field_mapper Shared field mapper.
+	 * @return CsvExporter
+	 */
+	private function build_csv_exporter( FieldMapper $field_mapper ) {
+		$order_extractor = new OrderExtractor();
+
+		return new CsvExporter( $order_extractor, $field_mapper );
 	}
 
 	/**
@@ -108,6 +143,7 @@ class Plugin {
 		$order_actions->register();
 
 		( new BulkActions( $this->print_job_controller ) )->register();
+		( new ExportActions( $this->csv_exporter ) )->register();
 
 		$order_extractor = new OrderExtractor();
 		( new OrderMetaBox( $order_actions, $order_extractor ) )->register();
@@ -158,6 +194,15 @@ class Plugin {
 	 */
 	public function get_print_job_controller() {
 		return $this->print_job_controller;
+	}
+
+	/**
+	 * Returns the CSV exporter, e.g. for use by other integrations.
+	 *
+	 * @return CsvExporter
+	 */
+	public function get_csv_exporter() {
+		return $this->csv_exporter;
 	}
 
 	/**
