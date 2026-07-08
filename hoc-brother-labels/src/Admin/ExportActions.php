@@ -129,9 +129,8 @@ class ExportActions {
 	/**
 	 * Handles the bulk CSV export by streaming the file directly and exiting.
 	 *
-	 * Streaming directly (rather than redirecting to a separate admin-post
-	 * endpoint) avoids output-buffer conflicts that prevent Content-Disposition
-	 * headers from reaching the browser cleanly.
+	 * WordPress verifies the bulk-orders nonce before firing this filter, so
+	 * no additional nonce check is needed here.
 	 *
 	 * @param string         $redirect_to Redirect URL (returned unchanged on mismatch).
 	 * @param string         $action_name Bulk action name being handled.
@@ -146,8 +145,6 @@ class ExportActions {
 		if ( ! Capability::current_user_can_print() ) {
 			wp_die( esc_html__( 'You do not have permission to export labels.', 'hoc-brother-labels' ) );
 		}
-
-		check_admin_referer( 'bulk-orders' );
 
 		$order_ids = array_map( 'absint', (array) $order_ids );
 		$orders    = array_filter( array_map( 'wc_get_order', $order_ids ) );
