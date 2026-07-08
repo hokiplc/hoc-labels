@@ -19,7 +19,7 @@ class Autoloader {
 	 *
 	 * @var string
 	 */
-	private const PREFIX = __NAMESPACE__ . '\\\\';
+	private const PREFIX = __NAMESPACE__ . '\\';
 
 	/**
 	 * Registers the autoloader with SPL.
@@ -42,7 +42,7 @@ class Autoloader {
 		}
 
 		$relative_class = substr( $class, strlen( self::PREFIX ) );
-		$relative_path  = str_replace( '\\\\', DIRECTORY_SEPARATOR, $relative_class ) . '.php';
+		$relative_path  = str_replace( '\\', DIRECTORY_SEPARATOR, $relative_class ) . '.php';
 		$file           = HOC_BROTHER_LABELS_PATH . 'src' . DIRECTORY_SEPARATOR . $relative_path;
 
 		if ( is_readable( $file ) ) {
