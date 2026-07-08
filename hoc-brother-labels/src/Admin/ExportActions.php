@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
 class ExportActions {
 
 	/**
-	 * Admin-post action name for exporting CSV (single order or bulk redirect target).
+	 * Admin-post action name for single-order CSV export.
 	 *
 	 * @var string
 	 */
@@ -41,13 +41,6 @@ class ExportActions {
 	 * @var string
 	 */
 	public const NONCE_ACTION = 'hoc_bl_export_csv_nonce';
-
-	/**
-	 * Nonce action name for bulk export.
-	 *
-	 * @var string
-	 */
-	public const BULK_NONCE_ACTION = 'hoc_bl_export_csv_bulk_nonce';
 
 	/**
 	 * CSV exporter dependency.
@@ -134,12 +127,13 @@ class ExportActions {
 	}
 
 	/**
-	 * Handles the bulk action by redirecting to the admin-post CSV download
-	 * endpoint with the selected order IDs. WordPress will follow the
-	 * returned URL as a redirect, and the admin-post handler streams the
-	 * file in response to that subsequent request.
+	 * Handles the bulk CSV export by streaming the file directly and exiting.
 	 *
-	 * @param string         $redirect_to Redirect URL.
+	 * Streaming directly (rather than redirecting to a separate admin-post
+	 * endpoint) avoids output-buffer conflicts that prevent Content-Disposition
+	 * headers from reaching the browser cleanly.
+	 *
+	 * @param string         $redirect_to Redirect URL (returned unchanged on mismatch).
 	 * @param string         $action_name Bulk action name being handled.
 	 * @param array<int,int> $order_ids   Selected order IDs.
 	 * @return string
@@ -153,20 +147,20 @@ class ExportActions {
 			wp_die( esc_html__( 'You do not have permission to export labels.', 'hoc-brother-labels' ) );
 		}
 
-		$url = add_query_arg(
-			array(
-				'action'    => self::ACTION,
-				'order_ids' => array_map( 'absint', (array) $order_ids ),
-			),
-			admin_url( 'admin-post.php' )
-		);
+		check_admin_referer( 'bulk-orders' );
 
-		return wp_nonce_url( $url, self::BULK_NONCE_ACTION );
+		$order_ids = array_map( 'absint', (array) $order_ids );
+		$orders    = array_filter( array_map( 'wc_get_order', $order_ids ) );
+		$filename  = 'hoc-labels-export-bulk-' . gmdate( 'Ymd-His' ) . '.csv';
+		$rows      = $this->csv_exporter->build_rows_for_orders( $orders );
+
+		$this->csv_exporter->stream_csv( $rows, $filename );
+		exit;
 	}
 
 	/**
-	 * Handles the admin-post request and streams the CSV download for either
-	 * a single order or a bulk-selected set of orders.
+	 * Handles the admin-post request and streams the CSV download for a
+	 * single order (triggered via the row action link).
 	 *
 	 * @return void
 	 */
@@ -175,25 +169,18 @@ class ExportActions {
 			wp_die( esc_html__( 'You do not have permission to export labels.', 'hoc-brother-labels' ) );
 		}
 
-		if ( isset( $_GET['order_ids'] ) ) {
-			check_admin_referer( self::BULK_NONCE_ACTION );
-
-			$order_ids = array_map( 'absint', (array) wp_unslash( $_GET['order_ids'] ) );
-			$filename  = 'hoc-labels-export-bulk-' . gmdate( 'Ymd-His' ) . '.csv';
-		} elseif ( isset( $_GET['order_id'] ) ) {
-			$order_id = absint( wp_unslash( $_GET['order_id'] ) );
-
-			check_admin_referer( self::NONCE_ACTION . '_' . $order_id );
-
-			$order_ids = array( $order_id );
-			$filename  = 'hoc-labels-export-order-' . $order_id . '.csv';
-		} else {
+		if ( ! isset( $_GET['order_id'] ) ) {
 			wp_die( esc_html__( 'No order specified for export.', 'hoc-brother-labels' ) );
 		}
 
-		$orders = array_filter( array_map( 'wc_get_order', $order_ids ) );
+		$order_id = absint( wp_unslash( $_GET['order_id'] ) );
 
-		$rows = $this->csv_exporter->build_rows_for_orders( $orders );
+		check_admin_referer( self::NONCE_ACTION . '_' . $order_id );
+
+		$order    = wc_get_order( $order_id );
+		$orders   = $order instanceof \WC_Order ? array( $order ) : array();
+		$filename = 'hoc-labels-export-order-' . $order_id . '.csv';
+		$rows     = $this->csv_exporter->build_rows_for_orders( $orders );
 
 		$this->csv_exporter->stream_csv( $rows, $filename );
 		exit;

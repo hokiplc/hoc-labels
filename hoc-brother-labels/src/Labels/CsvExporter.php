@@ -117,11 +117,19 @@ class CsvExporter {
 	/**
 	 * Streams the given rows as a CSV file download and terminates the request.
 	 *
+	 * Clears any active output buffers first so that previously buffered
+	 * content (e.g. from WordPress or plugins) does not corrupt the download
+	 * or prevent headers from being sent.
+	 *
 	 * @param array<int,array<string,mixed>> $rows     CSV rows (associative, keyed by column).
 	 * @param string                          $filename Suggested download filename.
 	 * @return void
 	 */
 	public function stream_csv( array $rows, $filename ) {
+		while ( ob_get_level() > 0 ) {
+			ob_end_clean();
+		}
+
 		nocache_headers();
 
 		header( 'Content-Type: text/csv; charset=utf-8' );
