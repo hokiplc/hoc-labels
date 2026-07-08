@@ -1,1 +1,88 @@
-PCFwaHAKLyoqCiAqIFBsdWdpbiBOYW1lOiAgICAgICBIb3VzZSBvZiBDb2ZmZWUgQnJvdGhlciBMYWJlbHMKICogUGx1Z2luIFVSSTogICAgICAgIGh0dHBzOi8vaG9raS5jb20vcGx1Z2lucwogKiBEZXNjcmlwdGlvbjogICAgICAgU2VuZHMgc3RydWN0dXJlZCBwcmludCBqb2JzIHRvIGFuIGV4dGVybmFsIEJyb3RoZXIgUUwtNzAwIGxhYmVsIHByaW50IHNlcnZpY2UgZm9yIEhvdXNlIG9mIENvZmZlZSBiYWcgbGFiZWxzICg2Mm1tIGNvbnRpbnVvdXMgcm9sbCksIGJhc2VkIG9uIFdvb0NvbW1lcmNlIG9yZGVyIGxpbmUgaXRlbXMuCiAqIFZlcnNpb246ICAgICAgICAgICAxLjAuMAogKiBSZXF1aXJlcyBhdCBsZWFzdDogNi4wCiAqIFJlcXVpcmVzIFBIUDogICAgICA3LjQKICogQXV0aG9yOiAgICAgICAgICAgIEhva2kgUGx1Z2lucwogKiBBdXRob3IgVVJJOiAgICAgICAgaHR0cHM6Ly9ob2tpLmNvbS9wbHVnaW5zCiAqIFRleHQgRG9tYWluOiAgICAgICBob2MtYnJvdGhlci1sYWJlbHMKICogRG9tYWluIFBhdGg6ICAgICAgIC9sYW5ndWFnZXMKICogTGljZW5zZTogICAgICAgICAgIEdQTCB2MiBvciBsYXRlcgogKiBMaWNlbnNlIFVSSTogICAgICAgaHR0cHM6Ly93d3cuZ251Lm9yZy9saWNlbnNlcy9ncGwtMi4wLmh0bWwKICogV0MgcmVxdWlyZXMgYXQgbGVhc3Q6IDYuMAogKiBXQyB0ZXN0ZWQgdXAgdG86ICAgOS4wCiAqCiAqIEBwYWNrYWdlIEhPQ1xCcm90aGVyTGFiZWxzCiAqLwoKZGVmaW5lZCggJ0FCU1BBVEgnICkgfHwgZXhpdDsKCi8vIFBsdWdpbiBjb25zdGFudHMuCmRlZmluZSggJ0hPQ19CUk9USEVSX0xBQkVMU19WRVJTSU9OJywgJzEuMC4wJyApOwpkZWZpbmUoICdIT0NfQlJPVEhFUl9MQUJFTFNfRklMRScsIF9fRklMRV9fICk7CmRlZmluZSggJ0hPQ19CUk9USEVSX0xBQkVMU19QQVRIJywgcGx1Z2luX2Rpcl9wYXRoKCBfX0ZJTEVfXyApICk7CmRlZmluZSggJ0hPQ19CUk9USEVSX0xBQkVMU19VUkwnLCBwbHVnaW5fZGlyX3VybCggX19GSUxFX18gKSApOwpkZWZpbmUoICdIT0NfQlJPVEhFUl9MQUJFTFNfQkFTRU5BTUUnLCBwbHVnaW5fYmFzZW5hbWUoIF9fRklMRV9fICkgKTsKCi8qKgogKiBEZWNsYXJlIFdvb0NvbW1lcmNlIEhQT1MgKEN1c3RvbSBPcmRlciBUYWJsZXMpIGNvbXBhdGliaWxpdHkuCiAqLwphZGRfYWN0aW9uKAoJJ2JlZm9yZV93b29jb21tZXJjZV9pbml0JywKCXN0YXRpYyBmdW5jdGlvbiAoKSB7CgkJaWYgKCBjbGFzc19leGlzdHMoIFxBdXRvbWF0dGljXFdvb0NvbW1lcmNlXFV0aWxpdGllc1xGZWF0dXJlc1V0aWw6OmNsYXNzICkgKSB7CgkJCVxBdXRvbWF0dGljXFdvb0NvbW1lcmNlXFV0aWxpdGllc1xGZWF0dXJlc1V0aWw6OmRlY2xhcmVfY29tcGF0aWJpbGl0eSgKCQkJCSdjdXN0b21fb3JkZXJfdGFibGVzJywKCQkJCUhPQ19CUk9USEVSX0xBQkVMU19GSUxFLAoJCQkJdHJ1ZQoJCQkpOwoJCX0KCX0KKTsKCi8qKgogKiBDaGVjayBXb29Db21tZXJjZSBkZXBlbmRlbmN5IGFuZCBib290c3RyYXAgdGhlIHBsdWdpbi4KICovCmFkZF9hY3Rpb24oICdwbHVnaW5zX2xvYWRlZCcsICdob2NfYnJvdGhlcl9sYWJlbHNfYm9vdHN0cmFwJyApOwoKLyoqCiAqIEJvb3RzdHJhcHMgdGhlIHBsdWdpbiBvbmNlIGFsbCBwbHVnaW5zIGFyZSBsb2FkZWQuCiAqCiAqIEByZXR1cm4gdm9pZAogKi8KZnVuY3Rpb24gaG9jX2Jyb3RoZXJfbGFiZWxzX2Jvb3RzdHJhcCgpIHsKCWlmICggISBjbGFzc19leGlzdHMoICdXb29Db21tZXJjZScgKSApIHsKCQlhZGRfYWN0aW9uKAoJCQknYWRtaW5fbm90aWNlcycsCgkJCXN0YXRpYyBmdW5jdGlvbiAoKSB7CgkJCQlpZiAoICEgY3VycmVudF91c2VyX2NhbiggJ2FjdGl2YXRlX3BsdWdpbnMnICkgKSB7CgkJCQkJcmV0dXJuOwoJCQkJfQoJCQkJZWNobyAnPGRpdiBjbGFzcz0ibm90aWNlIG5vdGljZS1lcnJvciI+PHA+JzsKCQkJCWVjaG8gZXNjX2h0bWxfXyggJ0hvdXNlIG9mIENvZmZlZSBCcm90aGVyIExhYmVscyByZXF1aXJlcyBXb29Db21tZXJjZSB0byBiZSBpbnN0YWxsZWQgYW5kIGFjdGl2ZS4nLCAnaG9jLWJyb3RoZXItbGFiZWxzJyApOwoJCQkJZWNobyAnPC9wPjwvZGl2Pic7CgkJCX0KCQkpOwoJCXJldHVybjsKCX0KCglyZXF1aXJlX29uY2UgSE9DX0JST1RIRVJfTEFCRUxTX1BBVEggLiAnc3JjL0F1dG9sb2FkZXIucGhwJzsKCVxIT0NcQnJvdGhlckxhYmVsc1xBdXRvbG9hZGVyOjpyZWdpc3RlcigpOwoKCVxIT0NcQnJvdGhlckxhYmVsc1xQbHVnaW46Omluc3RhbmNlKCktPmJvb3QoKTsKfQoKLyoqCiAqIEFjdGl2YXRpb24gaG9vayAtIG5vdGhpbmcgZGVzdHJ1Y3RpdmUsIGp1c3QgZW5zdXJlcyBkZWZhdWx0IG9wdGlvbnMgZXhpc3QuCiAqLwpyZWdpc3Rlcl9hY3RpdmF0aW9uX2hvb2soCglIT0NfQlJPVEhFUl9MQUJFTFNfRklMRSwKCXN0YXRpYyBmdW5jdGlvbiAoKSB7CgkJcmVxdWlyZV9vbmNlIEhPQ19CUk9USEVSX0xBQkVMU19QQVRIIC4gJ3NyYy9BdXRvbG9hZGVyLnBocCc7CgkJXEhPQ1xCcm90aGVyTGFiZWxzXEF1dG9sb2FkZXI6OnJlZ2lzdGVyKCk7CgkJXEhPQ1xCcm90aGVyTGFiZWxzXFN1cHBvcnRcT3B0aW9uczo6c2V0X2RlZmF1bHRzX2lmX21pc3NpbmcoKTsKCX0KKTsK
+<?php
+/**
+ * Plugin Name:       House of Coffee Brother Labels
+ * Plugin URI:        https://hoki.com/plugins
+ * Description:       Sends structured print jobs to an external Brother QL-700 label print service for House of Coffee bag labels (62mm continuous roll), based on WooCommerce order line items.
+ * Version:           1.0.0
+ * Requires at least: 6.0
+ * Requires PHP:      7.4
+ * Author:            Hoki Plugins
+ * Author URI:        https://hoki.com/plugins
+ * Text Domain:       hoc-brother-labels
+ * Domain Path:       /languages
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * WC requires at least: 6.0
+ * WC tested up to:   9.0
+ *
+ * @package HOC\BrotherLabels
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+// Plugin constants.
+define( 'HOC_BROTHER_LABELS_VERSION', '1.0.0' );
+define( 'HOC_BROTHER_LABELS_FILE', __FILE__ );
+define( 'HOC_BROTHER_LABELS_PATH', plugin_dir_path( __FILE__ ) );
+define( 'HOC_BROTHER_LABELS_URL', plugin_dir_url( __FILE__ ) );
+define( 'HOC_BROTHER_LABELS_BASENAME', plugin_basename( __FILE__ ) );
+
+/**
+ * Declare WooCommerce HPOS (Custom Order Tables) compatibility.
+ */
+add_action(
+	'before_woocommerce_init',
+	static function () {
+		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+				'custom_order_tables',
+				HOC_BROTHER_LABELS_FILE,
+				true
+			);
+		}
+	}
+);
+
+/**
+ * Check WooCommerce dependency and bootstrap the plugin.
+ */
+add_action( 'plugins_loaded', 'hoc_brother_labels_bootstrap' );
+
+/**
+ * Bootstraps the plugin once all plugins are loaded.
+ *
+ * @return void
+ */
+function hoc_brother_labels_bootstrap() {
+	if ( ! class_exists( 'WooCommerce' ) ) {
+		add_action(
+			'admin_notices',
+			static function () {
+				if ( ! current_user_can( 'activate_plugins' ) ) {
+					return;
+				}
+				echo '<div class="notice notice-error"><p>';
+				echo esc_html__( 'House of Coffee Brother Labels requires WooCommerce to be installed and active.', 'hoc-brother-labels' );
+				echo '</p></div>';
+			}
+		);
+		return;
+	}
+
+	require_once HOC_BROTHER_LABELS_PATH . 'src/Autoloader.php';
+	\HOC\BrotherLabels\Autoloader::register();
+
+	\HOC\BrotherLabels\Plugin::instance()->boot();
+}
+
+/**
+ * Activation hook - nothing destructive, just ensures default options exist.
+ */
+register_activation_hook(
+	HOC_BROTHER_LABELS_FILE,
+	static function () {
+		require_once HOC_BROTHER_LABELS_PATH . 'src/Autoloader.php';
+		\HOC\BrotherLabels\Autoloader::register();
+		\HOC\BrotherLabels\Support\Options::set_defaults_if_missing();
+	}
+);
